@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historia — G Records Studios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="historia.css"/>
+  <style>
+    /* ── Línea de tiempo ─────────────────────────────── */
+    .timeline {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    /* línea central vertical */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 80px;
+      bottom: 80px;
+      width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg,
+        transparent,
+        rgba(212,160,23,.25) 8%,
+        rgba(212,160,23,.25) 92%,
+        transparent);
+    }
+
+    .tl-titulo-seccion {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--dorado-claro);
+      text-align: center;
+      margin-bottom: 60px;
+      letter-spacing: 0.12em;
+    }
+
+    /* Cada nodo de la línea de tiempo */
+    .tl-nodo {
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr;
+      align-items: start;
+      gap: 0;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .tl-nodo.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Nodos pares → texto a la derecha, vacío a la izquierda */
+    .tl-nodo.derecha .tl-contenido { grid-column: 3; grid-row: 1; }
+    .tl-nodo.derecha .tl-punto-col { grid-column: 2; grid-row: 1; }
+    .tl-nodo.derecha .tl-vacio     { grid-column: 1; grid-row: 1; }
+
+    /* Nodos impares → texto a la izquierda, vacío a la derecha */
+    .tl-nodo.izquierda .tl-contenido { grid-column: 1; grid-row: 1; text-align: right; }
+    .tl-nodo.izquierda .tl-punto-col { grid-column: 2; grid-row: 1; }
+    .tl-nodo.izquierda .tl-vacio     { grid-column: 3; grid-row: 1; }
+
+    /* Columna del punto central */
+    .tl-punto-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    .tl-punto {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--dorado);
+      background: var(--negro);
+      box-shadow: 0 0 14px rgba(212,160,23,.35);
+      flex-shrink: 0;
+    }
+
+    /* Tarjeta de contenido */
+    .tl-contenido {
+      background: var(--negro-2);
+      border: 1px solid rgba(212,160,23,.12);
+      padding: 26px 28px;
+      margin: 0 16px;
+      position: relative;
+    }
+
+    .tl-nodo.derecha .tl-contenido {
+      border-left: 3px solid var(--dorado-oscuro);
+    }
+
+    .tl-nodo.izquierda .tl-contenido {
+      border-right: 3px solid var(--dorado-oscuro);
+    }
+
+    .tl-etiqueta {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--dorado-oscuro);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .tl-titulo {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: var(--dorado-claro);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .tl-texto {
+      font-weight: 300;
+      font-size: clamp(0.9rem, 1.6vw, 1rem);
+      line-height: 1.9;
+      color: rgba(240,192,64,.6);
+    }
+
+    /* Cita dentro de la tarjeta */
+    .tl-cita {
+      border-left: 3px solid var(--dorado-oscuro);
+      padding: 12px 18px;
+      margin-top: 16px;
+      background: rgba(107,47,160,.06);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(240,192,64,.5);
+      line-height: 1.7;
+    }
+
+    /* ── Sección Visión / Misión ─────────────────────── */
+    .vm-seccion {
+      position: relative; z-index: 1;
+      background: var(--negro-2);
+      border-top: 1px solid rgba(212,160,23,.1);
+      padding: 80px 40px;
+    }
+
+    .vm-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .vm-tarjeta {
+      background: var(--negro-3);
+      border: 1px solid rgba(212,160,23,.12);
+      padding: 44px 36px;
+      position: relative;
+      transition: box-shadow 0.3s;
+    }
+
+    .vm-tarjeta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--dorado-oscuro), var(--dorado));
+    }
+
+    .vm-tarjeta:hover {
+      box-shadow: 0 0 40px rgba(212,160,23,.08);
+    }
+
+    .vm-icono {
+      font-size: 1.8rem;
+      margin-bottom: 18px;
+      display: block;
+      color: var(--dorado-oscuro);
+    }
+
+    .vm-titulo {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      color: var(--dorado-claro);
+      margin-bottom: 18px;
+      letter-spacing: 0.1em;
+    }
+
+    .vm-texto {
+      font-weight: 300;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      line-height: 1.9;
+      color: rgba(240,192,64,.6);
+    }
+
+    @media (max-width: 760px) {
+      .timeline::before { display: none; }
+      .tl-nodo {
+        display: block;
+        padding-left: 0;
+      }
+      .tl-punto-col { display: none; }
+      .tl-contenido { margin: 0 0 8px; text-align: left !important; }
+      .tl-nodo.derecha .tl-contenido,
+      .tl-nodo.izquierda .tl-contenido {
+        border-left: 3px solid var(--dorado-oscuro);
+        border-right: none;
+      }
+      .vm-grid { grid-template-columns: 1fr; }
+      .timeline { padding: 60px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Botón volver -->
+  <a href="index.html" class="boton-volver">&#8592; Volver</a>
+
+  <!-- CABECERA -->
+  <header class="cabecera">
+    <p class="subtitulo-pequeno">✦ &nbsp; Nuestra trayectoria &nbsp; ✦</p>
+    <h1 class="titulo-pagina">Historia</h1>
+  </header>
+
+  <!-- BANDA INTRODUCTORIA -->
+  <div class="banda-intro">
+    <p>En G Records Studio, cada nota cuenta una historia, cada ritmo es un latido de pasión y cada artista es un capítulo en la narrativa de nuestro sello.</p>
+  </div>
+
+  <!-- LÍNEA DE TIEMPO -->
+  <section class="timeline">
+    <h2 class="tl-titulo-seccion">Nuestra Historia</h2>
+
+    <!-- Nodo 1 — derecha -->
+    <div class="tl-nodo derecha">
+      <div class="tl-vacio"></div>
+      <div class="tl-punto-col"><div class="tl-punto"></div></div>
+      <div class="tl-contenido">
+        <span class="tl-etiqueta">28 de Abril — El comienzo</span>
+        <h3 class="tl-titulo">Nace G Records Studio</h3>
+        <p class="tl-texto">Bajo la dirección de su fundador Eduardo Adolfo Vargas Polo, el estudio surge como el resultado de un sueño construido desde la infancia y alimentado por una profunda pasión por la música.</p>
+      </div>
+    </div>
+
+    <!-- Nodo 2 — izquierda -->
+    <div class="tl-nodo izquierda">
+      <div class="tl-contenido">
+        <span class="tl-etiqueta">Crecimiento personal</span>
+        <h3 class="tl-titulo">El Aprendizaje Constante</h3>
+        <p class="tl-texto">Con el paso de los años, la experiencia y el amor por la música fortalecieron no solo el talento artístico de Eduardo, sino también su visión empresarial.</p>
+        <div class="tl-cita">"El verdadero éxito no está solo en cumplir un sueño personal, sino en abrir caminos para que otros también puedan alcanzar sus metas."</div>
+      </div>
+      <div class="tl-punto-col"><div class="tl-punto"></div></div>
+      <div class="tl-vacio"></div>
+    </div>
+
+    <!-- Nodo 3 — derecha -->
+    <div class="tl-nodo derecha">
+      <div class="tl-vacio"></div>
+      <div class="tl-punto-col"><div class="tl-punto"></div></div>
+      <div class="tl-contenido">
+        <span class="tl-etiqueta">Transformación</span>
+        <h3 class="tl-titulo">De Sueño a Plataforma</h3>
+        <p class="tl-texto">G Records Studio dejó de ser únicamente un proyecto individual para convertirse en una plataforma de apoyo, formación y proyección para nuevos talentos.</p>
+      </div>
+    </div>
+
+    <!-- Nodo 4 — izquierda -->
+    <div class="tl-nodo izquierda">
+      <div class="tl-contenido">
+        <span class="tl-etiqueta">Hoy</span>
+        <h3 class="tl-titulo">El Presente</h3>
+        <p class="tl-texto">Impulsados por el compromiso y la disciplina, consolidamos un espacio donde los artistas encuentran oportunidades reales para desarrollar su carrera, expresar su identidad y llevar su arte al siguiente nivel — en escenarios nacionales e internacionales.</p>
+      </div>
+      <div class="tl-punto-col"><div class="tl-punto"></div></div>
+      <div class="tl-vacio"></div>
+    </div>
+
+  </section>
+
+  <!-- VISIÓN Y MISIÓN -->
+  <section class="vm-seccion">
+    <div class="vm-grid">
+
+      <div class="vm-tarjeta">
+        <span class="vm-icono">&#9670;</span>
+        <h3 class="vm-titulo">Visión</h3>
+        <p class="vm-texto">Ser un sello discográfico líder en el descubrimiento y proyección de nuevos talentos, llevando nuestras raíces y cultura musical a escenarios internacionales.</p>
+      </div>
+
+      <div class="vm-tarjeta">
+        <span class="vm-icono">&#9735;</span>
+        <h3 class="vm-titulo">Misión</h3>
+        <p class="vm-texto">Impulsar artistas emergentes, crear producciones de alta calidad y promover nuestra identidad cultural, conectando nuestra música con audiencias de todo el mundo.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <div class="cierre">
+    <p class="cierre-etiqueta">✦ &nbsp; La historia continúa &nbsp; ✦</p>
+    <p class="cierre-texto">Construyendo historias de éxito e inspirando nuevas generaciones con música de raíces y propósito.</p>
+    <div class="cierre-linea"></div>
+  </div>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <div class="footer-columnas">
+
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;letter-spacing:.12em;color:var(--dorado-claro);margin-bottom:16px;">G RECORD STUDIOS</div>
+        <p style="font-size:.88rem;font-weight:300;line-height:1.85;color:rgba(240,192,64,.5);text-align:justify;margin-bottom:20px;">Sello discográfico dedicado a descubrir, impulsar y desarrollar nuevos talentos. Producción musical de alto nivel desde el corazón de Sucre, Colombia.</p>
+        <span style="font-style:italic;font-size:.85rem;color:var(--dorado);opacity:.75;">Construyendo trayectorias sólidas y auténticas</span>
+      </div>
+
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--dorado);margin-bottom:22px;">Navegación</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+          <li><a href="index.html#inicio" style="font-size:.9rem;font-weight:300;color:rgba(240,192,64,.55);text-decoration:none;">Inicio</a></li>
+          <li><a href="index.html#valores" style="font-size:.9rem;font-weight:300;color:rgba(240,192,64,.55);text-decoration:none;">Valores</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--dorado);margin-bottom:22px;">Páginas</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+          <li><a href="index.html#ofrecemos" style="font-size:.9rem;font-weight:300;color:rgba(240,192,64,.55);text-decoration:none;">Ofrecimiento</a></li>
+          <li><a href="index.html#generos" style="font-size:.9rem;font-weight:300;color:rgba(240,192,64,.55);text-decoration:none;">Géneros</a></li>
+          <li><a href="equipamiento.html" style="font-size:.9rem;font-weight:300;color:rgba(240,192,64,.55);text-decoration:none;">Equipamiento</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--dorado);margin-bottom:22px;">Contacto</div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;color:rgba(240,192,64,.5);font-size:.88rem;font-weight:300;line-height:1.55;"><span style="flex-shrink:0;color:var(--dorado-oscuro);">&#9990;</span><span>+57 302 383 8311</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;color:rgba(240,192,64,.5);font-size:.88rem;font-weight:300;line-height:1.55;"><span style="flex-shrink:0;color:var(--dorado-oscuro);">&#9993;</span><span>grecordsstudiolacolmena@hotmail.com</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;color:rgba(240,192,64,.5);font-size:.88rem;font-weight:300;line-height:1.55;"><span style="flex-shrink:0;color:var(--dorado-oscuro);">&#9201;</span><span>Lunes – Sábados: 8:00 am – 7:00 pm</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;color:rgba(240,192,64,.5);font-size:.88rem;font-weight:300;line-height:1.55;"><span style="flex-shrink:0;color:var(--dorado-oscuro);">&#9679;</span><span>Sampués, Sucre, Colombia</span></div>
+      </div>
+
+    </div>
+
+    <div class="footer-barra-inferior">
+      <p style="font-size:.8rem;color:rgba(212,160,23,.45);font-weight:300;letter-spacing:.03em;">© 2026 · Eduardo Adolfo Vargas Polo · Todos los derechos reservados</p>
+      <div style="display:flex;gap:10px;">
+        <a href="https://www.instagram.com/grecordsstudio/" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,160,23,.22);display:flex;align-items:center;justify-content:center;color:rgba(212,160,23,.5);font-size:.72rem;font-family:'Cinzel',serif;font-weight:700;text-decoration:none;">IG</a>
+        <a href="https://www.facebook.com/grecordsstudioworld/" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,160,23,.22);display:flex;align-items:center;justify-content:center;color:rgba(212,160,23,.5);font-size:.72rem;font-family:'Cinzel',serif;font-weight:700;text-decoration:none;">FB</a>
+      </div>
+    </div>
+  </footer>
+// Animación scroll para los nodos de timeline
+  <script src="historia.js"></script>
+
+</body>
+</html>

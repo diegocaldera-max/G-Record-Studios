@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamiento — G Records Studios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="equipo.css"/>
+</head>
+<body>
+
+    <!-- Botón volver -->
+    <a href="index.html" class="boton-volver">&#8592; Volver</a>
+
+    <!-- CABECERA -->
+    <header class="cabecera">
+        <p class="subtitulo-pequeno">✦ &nbsp; Nuestro arsenal sonoro &nbsp; ✦</p>
+        <h1 class="titulo-pagina">Equipamiento</h1>
+    </header>
+
+    <!-- BANDA INTRO -->
+    <div class="banda-intro">
+        <p>Estos son los equipos que ofrecemos para apoyar a nuestros artistas, garantizando la calidad de nuestras producciones y brindando las herramientas necesarias para crear música de alto nivel.</p>
+    </div>
+
+    <!-- LISTA DE EQUIPOS -->
+    <section class="seccion-equipos">
+        <h2 class="titulo-seccion">Nuestro Equipo</h2>
+        <p class="subtitulo-seccion">Haz clic en cada elemento para conocer más</p>
+
+        <!-- Ítem 1: Interfaz -->
+        <div class="equipo-item" onclick="toggleEquipo(this)">
+            <div class="equipo-cabecera">
+                <div class="equipo-icono-wrap">
+                    <img src="scarlet.png" alt="Scarlett Focusrite">
+                </div>
+                <div class="equipo-nombre">Interfaz de Audio</div>
+                <div class="equipo-flecha">▼</div>
+            </div>
+            <div class="equipo-descripcion">
+                <p><strong style="color:var(--dorado-claro)">Scarlett Focusrite</strong> — La serie de interfaces de audio USB más vendida del mundo para home studios, podcasts y productores musicales. Ofrece preamplis de alta calidad, baja latencia y conversión de audio de 24 bits que garantizan capturas cristalinas en cada sesión.</p>
+            </div>
+        </div>
+
+        <!-- Ítem 2: Microfonía -->
+        <div class="equipo-item" onclick="toggleEquipo(this)">
+            <div class="equipo-cabecera">
+                <div class="equipo-icono-wrap">
+                    <img src="audiotecna.jpg" alt="Audio Técnica">
+                </div>
+                <div class="equipo-nombre">Microfonía</div>
+                <div class="equipo-flecha">▼</div>
+            </div>
+            <div class="equipo-descripcion">
+                <p><strong style="color:var(--dorado-claro)">Audio Técnica</strong> — Una de las marcas japonesas más prestigiosas a nivel mundial en el diseño y fabricación de equipos de audio profesional y de consumo masivo. Sus micrófonos de condensador son referencia en grabación vocal y de instrumentos en estudios de todo el mundo.</p>
+            </div>
+        </div>
+
+        <!-- Ítem 3: Monitores -->
+        <div class="equipo-item" onclick="toggleEquipo(this)">
+            <div class="equipo-cabecera">
+                <div class="equipo-icono-wrap">
+                    <img src="krk.jpg" alt="KRK Rokit">
+                </div>
+                <div class="equipo-nombre">Monitores de Estudio</div>
+                <div class="equipo-flecha">▼</div>
+            </div>
+            <div class="equipo-descripcion">
+                <p><strong style="color:var(--dorado-claro)">KRK Rokit</strong> — Herramientas de referencia diseñadas principalmente para la producción musical, mezcla, masterización y creación de contenido. Su respuesta de frecuencia amplia y fiel permite tomar decisiones de mezcla precisas que se traducen bien en cualquier sistema de reproducción.</p>
+            </div>
+        </div>
+
+        <!-- Ítem 4: Software -->
+        <div class="equipo-item" onclick="toggleEquipo(this)">
+            <div class="equipo-cabecera">
+                <div class="equipo-icono-wrap">
+                    <img src="studiocube.jpg" alt="FL Studio y Cubase">
+                </div>
+                <div class="equipo-nombre">Software</div>
+                <div class="equipo-flecha">▼</div>
+            </div>
+            <div class="equipo-descripcion">
+                <p><strong style="color:var(--dorado-claro)">FL Studio & Cubase</strong> — Dos de las estaciones de trabajo de audio digital más potentes del mercado. FL Studio destaca por su interfaz intuitiva y actualizaciones gratuitas de por vida, mientras que Cubase es el estándar de la industria para edición MIDI avanzada y grabación multipista profesional.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <div class="footer-columnas">
+
+            <div class="footer-marca">
+                <div class="footer-nombre">G RECORD STUDIOS</div>
+                <p class="footer-descripcion">
+                    Sello discográfico dedicado a descubrir, impulsar y desarrollar nuevos talentos.
+                    Producción musical de alto nivel desde el corazón de Sucre, Colombia.
+                </p>
+                <span class="footer-slogan">Construyendo trayectorias sólidas y auténticas</span>
+            </div>
+
+            <div>
+                <div class="footer-titulo-columna">Navegación</div>
+                <ul class="footer-nav">
+                    <li><a href="index.html#inicio">Inicio</a></li>
+                    <li><a href="index.html#valores">Valores</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-titulo-columna">Páginas</div>
+                <ul class="footer-nav">
+                    <li><a href="index.html#ofrecemos">Ofrecimiento</a></li>
+                    <li><a href="index.html#generos">Géneros</a></li>
+                    <li><a href="historia.html">Historia</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-titulo-columna">Contacto</div>
+                <div class="footer-dato">
+                    <span>&#9990;</span><span>+57 302 383 8311</span>
+                </div>
+                <div class="footer-dato">
+                    <span>&#9993;</span><span>grecordsstudiolacolmena@hotmail.com</span>
+                </div>
+                <div class="footer-dato">
+                    <span>&#9201;</span><span>Lunes – Sábados: 8:00 am – 7:00 pm</span>
+                </div>
+                <div class="footer-dato">
+                    <span>&#9679;</span><span>Sampués, Sucre, Colombia</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-barra-inferior">
+            <p>© 2026 · Eduardo Adolfo Vargas Polo · Todos los derechos reservados</p>
+            <div class="footer-redes">
+                <a href="https://www.instagram.com/grecordsstudio/" title="Instagram">IG</a>
+                <a href="https://www.facebook.com/grecordsstudioworld/" title="Facebook">FB</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="equipo.js"></script>
+
+</body>
+</html>
